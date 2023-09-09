@@ -33,7 +33,7 @@ public class PostController {
 
     // TODO: getting post by id
     @GetMapping("/posts/{id}")
-    public ResponseEntity<Post> getPostById(Long id) {
+    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
         // TODO: check if post is null
         Optional<Post> optPost = postRepository.findById(id);
         if (!optPost.isPresent()) {
@@ -47,14 +47,14 @@ public class PostController {
 
     // TODO: find by title
     @GetMapping("/posts/{title}")
-    public ResponseEntity<List<Post>> getPostByTitle(String title) {
+    public ResponseEntity<List<Post>> getPostByTitle(@PathVariable String title) {
         List<Post> posts = postRepository.findByTitle(title);
         return ResponseEntity.ok(posts);
     }
 
     // TODO: adding new post
     @PostMapping("/posts")
-    public ResponseEntity<String> addPost(Post post) {
+    public ResponseEntity<String> addPost(@RequestBody Post post) {
         postRepository.save(post);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -63,12 +63,12 @@ public class PostController {
 
     // TODO: delete post by id
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<String> deletePost(Long id) {
+    public ResponseEntity<String> deletePost(@PathVariable Long id) {
         if (!postRepository.existsById(id)) {
 
             // return error message 404
 
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
 
         }
         postRepository.deleteById(id);

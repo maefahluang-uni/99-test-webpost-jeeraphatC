@@ -31,7 +31,6 @@ public class Post {
     private LocalDateTime createdAt;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "postuser", referencedColumnName = "id")
     private User author;
 
     public Post() {

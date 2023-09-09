@@ -19,16 +19,9 @@ public class UserController {
 
     // TODO: end point for validate user by username
     @GetMapping("/users/{username}")
-    public ResponseEntity<User> getUserByUsername(String username) {
-        Optional<User> optUser = userRepository.findByUsername(username);
-        if (!optUser.isPresent()) {
+    public ResponseEntity<List<User>> getUserByUsername(@PathVariable String username) {
+        List<User> users = userRepository.findByUsername(username);
 
-            // return error message 404
-
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        }
-
-        return ResponseEntity.ok(optUser.get());
+        return ResponseEntity.ok(users);
     }
 }
